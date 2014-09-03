@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Panel de Administración - PAG</title>
+    
+    <!-- Bootstrap Core CSS -->
+    {% stylesheets 'bundles/admin/css/bootstrap.min.css'
+        'bundles/admin/css/plugins/metisMenu/metisMenu.min.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <!-- Custom CSS -->
+    {% stylesheets '@AdminBundle/Resources/public/less/sb-admin-2.less' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <!-- Custom Fonts -->
+    {% stylesheets 'bundles/admin/css/font-awesome.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        {% include 'AdminBundle:Extras:navigation.html.twig' %}
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            {% block pageContainer %}{% endblock %}
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    {% javascripts
+        '@AdminBundle/Resources/public/js/jquery-1.11.0.js'
+        '@AdminBundle/Resources/public/js/bootstrap.min.js'
+        '@AdminBundle/Resources/public/js/plugins/metisMenu/metisMenu.min.js'
+        '@AdminBundle/Resources/public/js/sb-admin-2.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% block javascripts %}
+    {% endblock %}
+
+</body>
+
+</html>

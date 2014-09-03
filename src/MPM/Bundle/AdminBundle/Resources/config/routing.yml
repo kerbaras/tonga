@@ -1,0 +1,8 @@
+admin_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Home:index }
+
+admin_clientes_ref:
+    resource: "@AdminBundle/Resources/config/routing/clientes.yml"
+    prefix:   /clientes
+

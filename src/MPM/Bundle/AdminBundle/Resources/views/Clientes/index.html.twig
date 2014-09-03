@@ -1,0 +1,82 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block pageContainer %}
+				<!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <i class="fa fa-group"></i>  Clientes <small>Gestor de Clientes</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-group"></i> Clientes
+                            </li>
+                        </ol>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Clientes
+                                    </div><!-- / .panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table id="tableClientes" class="table table-striped table-bordered table-hover datatable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Apellid</th>
+                                                        <th>Nombre</th>
+                                                        <th>DNI</th>
+                                                        <th>Telefono</th>
+                                                        <th>Tarifa</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for cliente in clientes %}
+                                                    <tr>
+                                                        <td>{{ cliente.apellido }}</td>
+                                                        <td>{{ cliente.nombre }}</td>
+                                                        <td>{{ cliente.dniNumero }} <em>({{ cliente.dniTipo}})</em></td>
+                                                        <td>{{ cliente.telefono }}</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr class="warning">
+                                                        <td colspan="6"><strong>No se encontraron Clientes</strong></td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div><!-- / .panel-body -->
+                                </div><!-- / .panel -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+{% endblock %}
+
+{% block stylesheets %}
+    <!-- DataTables CSS -->
+    {% stylesheets 'bundles/admin/css/plugins/dataTables.bootstrap.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    <!-- DataTables JavaScript -->
+    {% javascripts
+        '@AdminBundle/Resources/public/js/plugins/dataTables/jquery.dataTables.js'
+        '@AdminBundle/Resources/public/js/plugins/dataTables/dataTables.bootstrap.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $('.datatable').dataTable();
+    </script>
+    
+{% endblock %}
