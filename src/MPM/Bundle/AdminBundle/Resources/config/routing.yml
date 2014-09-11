@@ -1,6 +1,9 @@
 admin_homepage:
     path:     /
     defaults: { _controller: AdminBundle:Home:index }
+admin_loginpage:
+    path:     /login
+    defaults: { _controller: AdminBundle:Home:login }
 
 admin_clientes_ref:
     resource: "@AdminBundle/Resources/config/routing/clientes.yml"

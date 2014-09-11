@@ -1,3 +1,6 @@
 admin_clientes_homepage:
     path:     /
     defaults: { _controller: AdminBundle:Clientes:index }
+admin_clientes_newpage:
+    path:     /nuevo
+    defaults: { _controller: AdminBundle:Clientes:new }

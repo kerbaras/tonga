@@ -14,6 +14,7 @@
     <!-- Bootstrap Core CSS -->
     {% stylesheets 'bundles/admin/css/bootstrap.min.css'
         'bundles/admin/css/plugins/metisMenu/metisMenu.min.css'
+        'bundles/admin/css/jquery-ui/jquery-ui.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -41,7 +42,7 @@
 </head>
 
 <body>
-
+{% block htmlBody %}
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -55,9 +56,11 @@
 
     </div>
     <!-- /#wrapper -->
+{% endblock %}
 
     {% javascripts
         '@AdminBundle/Resources/public/js/jquery-1.11.0.js'
+        '@AdminBundle/Resources/public/js/jquery-ui.min.js'
         '@AdminBundle/Resources/public/js/bootstrap.min.js'
         '@AdminBundle/Resources/public/js/plugins/metisMenu/metisMenu.min.js'
         '@AdminBundle/Resources/public/js/sb-admin-2.js'

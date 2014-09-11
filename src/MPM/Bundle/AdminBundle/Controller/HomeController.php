@@ -10,4 +10,9 @@ class HomeController extends Controller
     {
         return $this->render('AdminBundle:Home:index.html.twig', array('mainMenu' => 'dash'));
     }
+
+    public function loginAction()
+    {
+        return $this->render('AdminBundle:Home:login.html.twig', array());
+    }
 }
