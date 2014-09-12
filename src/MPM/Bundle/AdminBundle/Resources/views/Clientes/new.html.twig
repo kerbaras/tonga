@@ -1,3 +1,5 @@
+{% import "AdminBundle:Functions:forms.html.twig" as forms %}
+
 {% extends 'AdminBundle::layout.html.twig' %}
 
 {% block pageContainer %}
@@ -23,31 +25,54 @@
                                         Agregar un Cliente
                                     </div><!-- / .panel-heading -->
                                     <div class="panel-body">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" action="" method="post">
+                                          {{ forms.input('nombre', '*Nombre', '', 'text', ' required') }}
+                                          {{ forms.input('apellido', '*Apellido', '', 'text', ' required') }}
+
                                           <div class="form-group">
-                                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                                            <div class="col-sm-10">
-                                              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                            <label for="dniNumero" class="col-sm-2 control-label">Documento</label>
+                                            <div class="col-sm-5">
+                                              <input type="text" class="form-control" id="dniNumero" name="dniNumero" placeholder="Número de Documento" value="" required />
+                                            </div>
+                                            <label for="dniTipo" class="col-sm-1 control-label">Tipo</label>
+                                            <div class="col-sm-4">
+                                              <select class="form-control" id="dniTipo" name="dniTipo" placeholder="Tipo de Documento">
+                                                <option value="dni" selected>DNI</option>
+                                                <option value="le">CI</option>
+                                                <option value="le">LE</option>
+                                                <option value="le">LC</option>
+                                              </select>
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                            <label for="sexo" class="col-sm-2 control-label">Sexo</label>
                                             <div class="col-sm-10">
-                                              <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                              <select class="form-control" id="sexo" name="sexo" placeholder="Sexo">
+                                                <option value="masc">Masculino</option>
+                                                <option value="fem" selected>Femenino</option>
+                                              </select>
                                             </div>
                                           </div>
+
+                                          {{ forms.input('telefono') }}
+                                          {{ forms.input('mail','E-Mail', '', 'email', ' required') }}
+
+                                          <div class="form-group">
+                                            <label for="imagen" class="col-sm-2 control-label">Foto</label>
+                                            <div class="col-sm-10">
+                                              <input type="file" class="form-control" id="imagen" name="imagen" placeholder="Foto del Cliente" accept="image/*">
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="notas" class="col-sm-2 control-label">Notas</label>
+                                            <div class="col-sm-10">
+                                              <textarea class="form-control" id="notas" name="notas" rows="10"></textarea>
+                                            </div>
+                                          </div>
+
                                           <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                              <div class="checkbox">
-                                                <label>
-                                                  <input type="checkbox"> Remember me
-                                                </label>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                              <button type="submit" class="btn btn-default">Sign in</button>
+                                              <button type="submit" class="btn btn-primary">Continuar</button>
                                             </div>
                                           </div>
                                         </form>

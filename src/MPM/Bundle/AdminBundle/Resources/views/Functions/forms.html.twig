@@ -1,0 +1,8 @@
+{% macro input(name, placeholder, value, type, opts, classes) %}
+		<div class="form-group">
+	    <label for="{{ name }}" class="col-sm-2 control-label">{{ placeholder|default(name|title) }}</label>
+	    <div class="col-sm-10">
+	      <input type="{{ type|default('text') }}" class="form-control{{ classes|default('') }}" id="{{ name }}" name="{{ name }}" placeholder="{{ placeholder|default(name|title) }}" value="{{ value|default('') }}"{{ opts|default('') }} />
+	    </div>
+	  </div>
+{% endmacro %}

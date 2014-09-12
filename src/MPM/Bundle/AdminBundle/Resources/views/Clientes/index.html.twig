@@ -32,21 +32,25 @@
                                                     <tr>
                                                         <th>Apellid</th>
                                                         <th>Nombre</th>
-                                                        <th>DNI</th>
-                                                        <th>Telefono</th>
-                                                        <th>Tarifa</th>
+                                                        <th class="hidden-xs hidden-sm">DNI</th>
+                                                        <th class="hidden-xs">Telefono</th>
+                                                        <th class="hidden-xs">Tarifa</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                 {% for cliente in clientes %}
-                                                    <tr>
+                                                    <tr style="vertical-align: middle;">
                                                         <td>{{ cliente.apellido }}</td>
                                                         <td>{{ cliente.nombre }}</td>
-                                                        <td>{{ cliente.dniNumero }} <em>({{ cliente.dniTipo}})</em></td>
-                                                        <td>{{ cliente.telefono }}</td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td class="hidden-xs hidden-sm">{{ cliente.dniNumero }} <em>({{ cliente.dniTipo}})</em></td>
+                                                        <td class="hidden-xs">{{ cliente.telefono }}</td>
+                                                        <td class="hidden-xs"></td>
+                                                        <td width="150px" align="center"><div class="btn-group">
+                                                          <a href="#" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                                          <a href="#" class="btn btn-info"><i class="fa fa-search"></i></a>
+                                                          <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                                        </div></td>
                                                     </tr>
                                                 {% else %}
                                                     <tr class="warning">
