@@ -1,0 +1,54 @@
+<?php
+
+namespace MPM\Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use MPM\Bundle\PagosBundle\Entity\Tarifa;
+use MPM\Bundle\PagosBundle\Entity\MesPago;
+use MPM\Bundle\PagosBundle\Entity\Pago;
+use MPM\Bundle\PagosBundle\Entity\Caja;
+
+/**
+ * Personal
+ *
+ * @ORM\Table(name="personal")
+ * @ORM\Entity(repositoryClass="MPM\Bundle\AdminBundle\Entity\PersonalRepository")
+ */
+class Personal
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255)
+     */
+    protected $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=255)
+     */
+    protected $tipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    protected $role;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Pago", mappedBy="personal")
+     **/
+    protected $pagosRealizados;
+
+}

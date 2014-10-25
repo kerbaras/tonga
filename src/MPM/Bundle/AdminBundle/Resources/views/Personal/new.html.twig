@@ -1,0 +1,91 @@
+{% import 'AdminBundle:Functions:forms.html.twig' as forms %}
+
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block pageContainer %}
+				<!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <i class="fa fa-group"></i> Personal <small>Gestor del Personal</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{{ path('admin_personal_homepage') }}"><i class="fa fa-briefcase"></i> Personal</a>
+                            </li>
+                            {% if action == "Agregar" %}
+                            <li class="active">
+                                Nuevo
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="{{ path('admin_personal_homepage') }}">{{ personal.apellido }}, {{ personal.nombre }}</a>
+                            </li>
+                            <li class="active">
+                                Editar
+                            </li>
+                            {% endif %}
+                        </ol>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {{ action }} un personal
+                                    </div><!-- / .panel-heading -->
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
+
+                                          {{ forms.input('nombre', 'Nombre', personal.nombre) }}
+
+                                          {{ forms.input('apellido', 'Apellido', personal.apellido) }}
+
+                                          {{ forms.input('dni', 'DNI', personal.dni) }}
+
+                                          <div class="form-group">
+                                              <label for="sexo" class="col-md-2 control-label">Sexo</label>
+                                              <div class="col-md-10">
+                                                  <select class="form-control" name="sexo">
+                                                      <option value="fem"{% if personal.sexo == true %}selected{% endif %}>Femenino</option>
+                                                      <option value="masc"{% if personal.sexo == false %}selected{% endif %}>Masculino</option>
+                                                  </select>
+                                              </div>
+                                          </div>
+
+                                          {{ forms.input('mail', 'E-Mail', personal.mail, 'email') }}
+
+                                          {{ forms.input('telefono', 'Teléfono', personal.telefono) }}
+
+                                          {{ forms.input('username', 'Nombre de Usuario', personal.username) }}
+
+                                          {{ forms.input('password', 'Contraseña', '', 'password') }}
+
+                                          {{ forms.input('tipo', 'Tipo de Personal', personal.tipo) }}
+
+                                          <div class="form-group">
+                                              <label for="role" class="col-md-2 control-label">Rol</label>
+                                              <div class="col-md-10">
+                                                  <select class="form-control" name="role">
+                                                      <option value="ROLE_SEC"{% if personal.role == "ROLE_SEC" %} selected{% endif %}>Secretario</option>
+                                                      <option value="ROLE_PROF"{% if personal.role == "ROLE_PROF" %} selected{% endif %}>Profesor</option>
+                                                      <option value="ROLE_ADMIN"{% if personal.role == "ROLE_ADMIN" %} selected{% endif %}>Administrador</option>
+                                                  </select>
+                                              </div>
+                                          </div>
+
+                                          {{ forms.input('image', 'Imagen', '', 'file') }}
+
+                                          <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                              <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                          </div>
+                                        </form>
+                                    </div><!-- / .panel-body -->
+                                </div><!-- / .panel -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+{% endblock %}

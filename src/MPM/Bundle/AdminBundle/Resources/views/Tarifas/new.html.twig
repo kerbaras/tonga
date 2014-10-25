@@ -1,0 +1,56 @@
+{% import 'AdminBundle:Functions:forms.html.twig' as forms %}
+
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block pageContainer %}
+				<!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <i class="fa fa-group"></i> Tarifas <small>Gestor de tarifas</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{{ path('admin_clientes_homepage') }}"><i class="fa fa-group"></i> Tarifas</a>
+                            </li>
+                            {% if action == "Agregar" %}
+                            <li class="active">
+                                Nueva
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="{{ path('admin_clientes_homepage') }}">{{ tarifa.nombre }} (${{ tarifa.monto }})</a>
+                            </li>
+                            <li class="active">
+                                Editar
+                            </li>
+                            {% endif %}
+                        </ol>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {{ action }} una tarifa
+                                    </div><!-- / .panel-heading -->
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
+
+                                          {{ forms.input('nombre', 'Nombre', tarifa.nombre) }}
+
+                                          {{ forms.input('monto', 'Monto', tarifa.monto, 'number') }}
+
+                                          <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                              <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                          </div>
+                                        </form>
+                                    </div><!-- / .panel-body -->
+                                </div><!-- / .panel -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+{% endblock %}

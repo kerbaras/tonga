@@ -3,14 +3,19 @@
 namespace MPM\Bundle\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * Persona
  *
- * @ORM\Table()
+ * @ORM\Table(name="personas")
  * @ORM\Entity(repositoryClass="MPM\Bundle\AdminBundle\Entity\PersonaRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"person" = "Persona", "client" = "Cliente", "personal" = "Personal"})
+ *
  */
-class Persona
+class Persona implements AdvancedUserInterface
 {
     /**
      * @var integer
@@ -19,99 +24,220 @@ class Persona
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
      */
-    private $nombre;
+    protected $nombre;
 
     /**
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=255)
      */
-    private $apellido;
+    protected $apellido;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="dniTipo", type="string", length=255)
+     * @ORM\Column(name="dni", type="string", length=255)
      */
-    private $dniTipo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="dniNumero", type="string", length=255)
-     */
-    private $dniNumero;
+    protected $dni;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="sexo", type="boolean")
      */
-    private $sexo;
+    protected $sexo;
 
     /**
      * @var string
      *
      * @ORM\Column(name="telefono", type="string", length=255)
      */
-    private $telefono;
+    protected $telefono;
 
     /**
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=255)
      */
-    private $mail;
+    protected $mail;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="sysLog", type="datetime")
      */
-    private $sysLog;
+    protected $sysLog;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="salt", type="string", length=255)
      */
-    private $salt;
+    protected $salt;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    protected $enabled;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="locked", type="boolean")
+     */
+    protected $locked;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="expired", type="boolean")
+     */
+    protected $expired;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="expiresAt", type="datetime", nullable=true)
+     */
+    protected $expiresAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="blob")
+     * @ORM\Column(name="credentials", type="string", length=255, nullable=true)
      */
-    private $image;
+    protected $credentials;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="credentialsExpired", type="boolean")
+     */
+    protected $credentialsExpired;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="credentialsExpireAt", type="datetime", nullable=true)
+     */
+    protected $credentialsExpireAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="imageType", type="string", length=255)
+     * @ORM\Column(name="image", type="blob", nullable=true)
      */
-    private $imageType;
+    protected $image;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="notas", type="text")
+     * @ORM\Column(name="imageType", type="string", length=255, nullable=true)
      */
-    private $notas;
+    protected $imageType;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notas", type="text", nullable=true)
+     */
+    protected $notas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Log", mappedBy="usuario")
+     **/
+    protected $logs;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->sysLog = new \DateTime("now");
+        $this->enabled = true;
+        $this->locked = false;
+        $this->expired = false;
+        $this->credentialsExpired = false;
+    }
+
+    //.....::::Interface Code::::.....//
+
+    public function getUsername()
+    {
+        return $this->mail;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    public function getRoles()
+    {
+        return array("ROLE_USER");
+    }
+
+    public function eraseCredentials()
+    {
+        $this->credentials = null;
+        return $this;
+    }
+
+    public function isEnabled ()
+    {
+        return $this->enabled;
+    }
+
+    public function isAccountNonExpired()
+    {
+        if (true === $this->expired) {
+            return false;
+        }
+        if (null !== $this->expiresAt && $this->expiresAt->getTimestamp() < time()) {
+            return false;
+        }
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return !$this->locked;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        if (true === $this->credentialsExpired) {
+            return false;
+        }
+        if (null !== $this->credentialsExpireAt && $this->credentialsExpireAt->getTimestamp() < time()) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get id
@@ -170,49 +296,26 @@ class Persona
     }
 
     /**
-     * Set dniTipo
+     * Set dni
      *
-     * @param string $dniTipo
+     * @param string $dni
      * @return Persona
      */
-    public function setDniTipo($dniTipo)
+    public function setDni($dni)
     {
-        $this->dniTipo = $dniTipo;
+        $this->dni = $dni;
 
         return $this;
     }
 
     /**
-     * Get dniTipo
+     * Get dni
      *
      * @return string 
      */
-    public function getDniTipo()
+    public function getDni()
     {
-        return $this->dniTipo;
-    }
-
-    /**
-     * Set dniNumero
-     *
-     * @param string $dniNumero
-     * @return Persona
-     */
-    public function setDniNumero($dniNumero)
-    {
-        $this->dniNumero = $dniNumero;
-
-        return $this;
-    }
-
-    /**
-     * Get dniNumero
-     *
-     * @return string 
-     */
-    public function getDniNumero()
-    {
-        return $this->dniNumero;
+        return $this->dni;
     }
 
     /**
@@ -320,15 +423,6 @@ class Persona
         return $this;
     }
 
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
 
     /**
      * Set salt
@@ -341,16 +435,6 @@ class Persona
         $this->salt = $salt;
 
         return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
@@ -420,5 +504,199 @@ class Persona
     public function getNotas()
     {
         return $this->notas;
+    }
+
+    /**
+     * Add logs
+     *
+     * @param Log $logs
+     * @return Persona
+     */
+    public function addLog(Log $logs)
+    {
+        $this->logs[] = $logs;
+
+        return $this;
+    }
+
+    /**
+     * Remove logs
+     *
+     * @param Log $logs
+     */
+    public function removeLog(Log $logs)
+    {
+        $this->logs->removeElement($logs);
+    }
+
+    /**
+     * Get logs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLogs()
+    {
+        return $this->logs;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Persona
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     * @return Persona
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean 
+     */
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Set expired
+     *
+     * @param boolean $expired
+     * @return Persona
+     */
+    public function setExpired($expired)
+    {
+        $this->expired = $expired;
+
+        return $this;
+    }
+
+    /**
+     * Get expired
+     *
+     * @return boolean 
+     */
+    public function getExpired()
+    {
+        return $this->expired;
+    }
+
+    /**
+     * Set expiresAt
+     *
+     * @param \DateTime $expiresAt
+     * @return Persona
+     */
+    public function setExpiresAt($expiresAt)
+    {
+        $this->expiresAt = $expiresAt;
+
+        return $this;
+    }
+
+    /**
+     * Get expiresAt
+     *
+     * @return \DateTime 
+     */
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * Set credentials
+     *
+     * @param string $credentials
+     * @return Persona
+     */
+    public function setCredentials($credentials)
+    {
+        $this->credentials = $credentials;
+
+        return $this;
+    }
+
+    /**
+     * Get credentials
+     *
+     * @return string 
+     */
+    public function getCredentials()
+    {
+        return $this->credentials;
+    }
+
+    /**
+     * Set credentialsExpired
+     *
+     * @param boolean $credentialsExpired
+     * @return Persona
+     */
+    public function setCredentialsExpired($credentialsExpired)
+    {
+        $this->credentialsExpired = $credentialsExpired;
+
+        return $this;
+    }
+
+    /**
+     * Get credentialsExpired
+     *
+     * @return boolean 
+     */
+    public function getCredentialsExpired()
+    {
+        return $this->credentialsExpired;
+    }
+
+    /**
+     * Set credentialsExpireAt
+     *
+     * @param \DateTime $credentialsExpireAt
+     * @return Persona
+     */
+    public function setCredentialsExpireAt($credentialsExpireAt)
+    {
+        $this->credentialsExpireAt = $credentialsExpireAt;
+
+        return $this;
+    }
+
+    /**
+     * Get credentialsExpireAt
+     *
+     * @return \DateTime 
+     */
+    public function getCredentialsExpireAt()
+    {
+        return $this->credentialsExpireAt;
     }
 }

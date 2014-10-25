@@ -1,0 +1,50 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block pageContainer %}
+				<!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <i class="fa fa-group"></i> Clientes <small>Gestor de clientes</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{{ path('admin_clientes_homepage') }}"><i class="fa fa-group"></i> Clientes</a>
+                            </li>
+                            <li class="active">
+                                {{ cliente.apellido }}, {{ cliente.nombre }}
+                            </li>
+                        </ol>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ path('admin_clientes_photo', { 'id': cliente.id }) }}" style="width: 100%; max-width: 250px; align:center;" />
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-12"><strong>{{ cliente.apellido }}, {{ cliente.nombre }}</strong><br /></div>
+
+                                            <div class="col-md-2"><strong>DNI</strong></div>
+                                            <div class="col-md-10"><em>{{ cliente.dni }}</em><br /></div>
+
+                                            <div class="col-md-2"><strong>E-Mail</strong></div>
+                                            <div class="col-md-10"><em>{{ cliente.mail }}</em><br /></div>
+
+                                            <div class="col-md-2"><strong>Teléfono</strong></div>
+                                            <div class="col-md-10"><em>{{ cliente.telefono }}</em><br /></div>
+
+
+                                            <div class="col-md-2"><strong>Cuóta</strong></div>
+                                            <div class="col-md-10"><em>{{ cliente.tarifa.nombre }} (${{ cliente.tarifa.monto}})</em></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+{% endblock %}

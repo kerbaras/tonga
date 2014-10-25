@@ -1,0 +1,66 @@
+<?php
+
+namespace MPM\Bundle\PagosBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use MPM\Bundle\AdminBundle\Entity\Cliente;
+use MPM\Bundle\AdminBundle\Entity\Persona;
+use MPM\Bundle\AdminBundle\Entity\Personal;
+
+
+/**
+ * Pago
+ *
+ * @ORM\Table(name="pagos")
+ * @ORM\Entity(repositoryClass="MPM\Bundle\PagosBundle\Entity\PagoRepository")
+ */
+class Pago
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    protected $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="monto", type="decimal")
+     */
+    protected $monto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descriptor", type="string", length=255)
+     */
+    protected $descriptor;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="pagos")
+     * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
+     **/
+    protected $cliente;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Pesonal", inversedBy="pagosRealizados")
+     * @ORM\JoinColumn(name="personal_id", referencedColumnName="id")
+     **/
+    protected $personal;
+
+    /**
+     * @ORM\OneToMany(targetEntity="MesPago", mappedBy="pago")
+     **/
+    protected $meses;
+
+}

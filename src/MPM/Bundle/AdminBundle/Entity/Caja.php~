@@ -1,0 +1,60 @@
+<?php
+
+namespace MPM\Bundle\PagosBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use MPM\Bundle\AdminBundle\Entity\Cliente;
+use MPM\Bundle\AdminBundle\Entity\Persona;
+use MPM\Bundle\AdminBundle\Entity\Personal;
+
+
+/**
+ * Caja
+ *
+ * @ORM\Table(name="cajas")
+ * @ORM\Entity(repositoryClass="MPM\Bundle\PagosBundle\Entity\CajaRepository")
+ */
+class Caja
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_open", type="datetime")
+     */
+    protected $fechaOp;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Pesonal")
+     * @ORM\JoinColumn(name="personal_open_id", referencedColumnName="id")
+     **/
+    protected $personalOp;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_close", type="datetime")
+     */
+    protected $fechaCl;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Pesonal")
+     * @ORM\JoinColumn(name="personal_close_id", referencedColumnName="id")
+     **/
+    protected $personalCl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="monto", type="decimal")
+     */
+    protected $monto;
+}

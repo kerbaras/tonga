@@ -1,6 +1,31 @@
 admin_clientes_homepage:
     path:     /
     defaults: { _controller: AdminBundle:Clientes:index }
+admin_clientes_show:
+    path:     /{id}
+    defaults: { _controller: AdminBundle:Clientes:show }
+    methods:  [GET]
 admin_clientes_newpage:
     path:     /nuevo
     defaults: { _controller: AdminBundle:Clientes:new }
+    methods:  [GET]
+admin_clientes_create:
+    path:     /nuevo
+    defaults: { _controller: AdminBundle:Clientes:create }
+    methods:  [POST]
+admin_clientes_editpage:
+    path:     /{id}/editar
+    defaults: { _controller: AdminBundle:Clientes:edit }
+    methods:  [GET]
+admin_clientes_update:
+    path:     /{id}/editar
+    defaults: { _controller: AdminBundle:Clientes:update }
+    methods:  [POST]
+admin_clientes_photo:
+    path:     /{id}/photo
+    defaults: { _controller: AdminBundle:Clientes:showPhoto }
+    methods:  [GET]
+admin_clientes_delete:
+    path:     /{id}/eliminar
+    defaults: { _controller: AdminBundle:Clientes:remove }
+    methods:  [GET]

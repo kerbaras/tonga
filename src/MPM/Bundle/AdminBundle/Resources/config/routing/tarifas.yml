@@ -1,0 +1,23 @@
+admin_tarifas_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Tarifas:index }
+admin_tarifas_newpage:
+    path:     /nueva
+    defaults: { _controller: AdminBundle:Tarifas:new }
+    methods:  [GET]
+admin_tarifas_create:
+    path:     /nueva
+    defaults: { _controller: AdminBundle:Tarifas:create }
+    methods:  [POST]
+admin_tarifas_editpage:
+    path:     /{id}/editar
+    defaults: { _controller: AdminBundle:Tarifas:edit }
+    methods:  [GET]
+admin_tarifas_update:
+    path:     /{id}/editar
+    defaults: { _controller: AdminBundle:Tarifas:update }
+    methods:  [POST]
+admin_tarifas_delete:
+    path:     /{id}/eliminar
+    defaults: { _controller: AdminBundle:Tarifas:remove }
+    methods:  [GET]

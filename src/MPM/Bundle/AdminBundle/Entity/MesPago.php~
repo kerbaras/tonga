@@ -1,0 +1,60 @@
+<?php
+
+namespace MPM\Bundle\PagosBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use MPM\Bundle\AdminBundle\Entity\Cliente;
+use MPM\Bundle\AdminBundle\Entity\Persona;
+use MPM\Bundle\AdminBundle\Entity\Personal;
+
+/**
+ * MesPago
+ *
+ * @ORM\Table(name="meses_pagos")
+ * @ORM\Entity(repositoryClass="MPM\Bundle\PagosBundle\Entity\MesPagoRepository")
+ */
+class MesPago
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="mes", type="integer")
+     */
+    protected $mes;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ano", type="integer")
+     */
+    protected $ano;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Pago", inversedBy="meses")
+     * @ORM\JoinColumn(name="pago_id", referencedColumnName="id")
+     **/
+    protected $pago;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="mesesPagos")
+     * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
+     **/
+    protected $cliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacion", type="text")
+     */
+    protected $observacion;
+
+}

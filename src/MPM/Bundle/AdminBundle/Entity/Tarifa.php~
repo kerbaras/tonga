@@ -1,0 +1,54 @@
+<?php
+
+namespace MPM\Bundle\PagosBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use MPM\Bundle\AdminBundle\Entity\Cliente;
+use MPM\Bundle\AdminBundle\Entity\Persona;
+use MPM\Bundle\AdminBundle\Entity\Personal;
+
+
+/**
+ * Tarifa
+ *
+ * @ORM\Table(name="tarifas")
+ * @ORM\Entity(repositoryClass="MPM\Bundle\PagosBundle\Entity\TarifaRepository")
+ */
+class Tarifa
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    protected $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="monto", type="decimal")
+     */
+    protected $monto;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duracion", type="integer")
+     */
+    protected $duracion;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Cliente", mappedBy="tarifa")
+     **/
+    protected $clientes;
+
+}

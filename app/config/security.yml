@@ -1,12 +1,37 @@
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        MPM\Bundle\AdminBundle\Entity\Persona: sha512
+
+    role_hierarchy:
+        ROLE_CLIENT:      ROLE_USER
+        ROLE_SEC:         ROLE_USER
+        ROLE_ADMIN:       ROLE_USER
+        #ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_CLIENT, ROLE_SEC, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
-        in_memory:
-            memory: ~
+        main:
+            entity:
+                class: MPM\Bundle\AdminBundle\Entity\Personal
+                property: username
 
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        default:
+        secured_area:
+            pattern:    ^/
+            form_login:
+                check_path: login_check
+                login_path: login
+            logout:
+                path:   logout
+                target: admin_homepage
             anonymous: ~
+            remember_me:
+                  key:      "%secret%"
+                  lifetime: 31536000 # 365 days in seconds
+                  path:     /
+                  domain:   ~ # Defaults to the current domain from $_SERVER
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/, roles: ['ROLE_SEC', 'ROLE_ADMIN'] }
+        - { path: ^/personal, roles: 'ROLE_ADMIN' }

@@ -1,3 +1,5 @@
+{% import 'AdminBundle:Functions:forms.html.twig' as forms %}
+
 {% extends 'AdminBundle::layout.html.twig' %}
 
 {% block pageContainer %}
@@ -5,49 +7,73 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            <i class="fa fa-group"></i> Clientes <small>Gestor de Clientes</small>
+                            <i class="fa fa-group"></i> Clientes <small>Gestor de clientes</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <a href="{{ path('admin_clientes_homepage') }}"><i class="fa fa-group"></i> Clientes</a>
                             </li>
+                            {% if action == "Agregar" %}
                             <li class="active">
-                                <i class="fa fa-group"></i> Nuevo
+                                Nuevo
                             </li>
+                            {% else %}
+                            <li>
+                                <a href="{{ path('admin_clientes_homepage') }}">{{ cliente.apellido }}, {{ cliente.nombre }}</a>
+                            </li>
+                            <li class="active">
+                                Editar
+                            </li>
+                            {% endif %}
                         </ol>
 
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Agregar un Cliente
+                                        {{ action }} un cliente
                                     </div><!-- / .panel-heading -->
                                     <div class="panel-body">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
+
+                                          {{ forms.input('nombre', 'Nombre', cliente.nombre) }}
+
+                                          {{ forms.input('apellido', 'Apellido', cliente.apellido) }}
+
+                                          {{ forms.input('dni', 'DNI', cliente.dni) }}
+
                                           <div class="form-group">
-                                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                                            <div class="col-sm-10">
-                                              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                                            <div class="col-sm-10">
-                                              <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                              <div class="checkbox">
-                                                <label>
-                                                  <input type="checkbox"> Remember me
-                                                </label>
+                                              <label for="sexo" class="col-md-2 control-label">Sexo</label>
+                                              <div class="col-md-10">
+                                                  <select class="form-control" name="sexo">
+                                                      <option value="fem"{% if cliente.sexo == true %}selected{% endif %}>Femenino</option>
+                                                      <option value="masc"{% if cliente.sexo == false %}selected{% endif %}>Masculino</option>
+                                                  </select>
                                               </div>
-                                            </div>
                                           </div>
+
+                                          {{ forms.input('mail', 'E-Mail', cliente.mail, 'email') }}
+
+                                          {{ forms.input('telefono', 'Teléfono', cliente.telefono) }}
+
+                                          <div class="form-group">
+                                              <label for="tarifa" class="col-md-2 control-label">Tarifa</label>
+                                              <div class="col-md-10">
+                                                  <select class="form-control" name="tarifa">
+                                                      {% for tarifa in tarifas %}
+                                                      <option value="{{ tarifa.id }}"{% if cliente.tarifa.id is defined %}{% if cliente.tarifa.id == tarifa.id %} selected{% endif %}{% endif %}>{{ tarifa.nombre }} (${{ tarifa.monto }})</option>
+                                                      {% else %}
+                                                      <option value="-1" selected>No hay tarifas</option>
+                                                      {% endfor %}
+                                                  </select>
+                                              </div>
+                                          </div>
+
+                                          {{ forms.input('image', 'Imagen', '', 'file') }}
+
                                           <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                              <button type="submit" class="btn btn-default">Sign in</button>
+                                              <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                           </div>
                                         </form>

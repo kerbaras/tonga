@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Cliente
  * 
+ * @ORM\Table(name="clientes")
  * @ORM\Entity(repositoryClass="MPM\Bundle\AdminBundle\Entity\ClienteRepository")
  */
 class Cliente extends Persona
@@ -14,33 +15,56 @@ class Cliente extends Persona
     /**
      * @var integer
      *
-     * @ORM\Column(name="asosiationId", type="bigint")
+     * @ORM\Column(name="asosiationId", type="string")
      */
-    private $asosiationId;
+    protected $asosiationId;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="sancionado", type="boolean")
      */
-    private $sancionado;
+    protected $sancionado;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sancionadoDesde", type="date")
+     * @ORM\Column(name="sancionadoDesde", type="date", nullable=true)
      */
-    private $sancionadoDesde;
+    protected $sancionadoDesde;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Tarifa", inversedBy="clientes")
+     * @ORM\JoinColumn(name="tarifa_id", referencedColumnName="id")
+     **/
+    protected $tarifa;
+
+    /**
+     * @ORM\OneToMany(targetEntity="MesPago", mappedBy="cliente")
+     **/
+    protected $mesesPagos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Pago", mappedBy="cliente")
+     **/
+    protected $pagos;
 
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * Constructor
      */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
+        $this->mesesPagos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pagos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->asosiationId = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->sancionado = false;
+    }
+
+    public function getRoles()
+    {
+        return array("ROLE_CLIENT");
     }
 
     /**
@@ -110,5 +134,94 @@ class Cliente extends Persona
     public function getSancionadoDesde()
     {
         return $this->sancionadoDesde;
+    }
+
+    /**
+     * Set tarifa
+     *
+     * @param Tarifa $tarifa
+     * @return Cliente
+     */
+    public function setTarifa(Tarifa $tarifa = null)
+    {
+        $this->tarifa = $tarifa;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifa
+     *
+     * @return Tarifa 
+     */
+    public function getTarifa()
+    {
+        return $this->tarifa;
+    }
+
+    /**
+     * Add mesesPagos
+     *
+     * @param MesPago $mesesPagos
+     * @return Cliente
+     */
+    public function addMesesPago(MesPago $mesesPagos)
+    {
+        $this->mesesPagos[] = $mesesPagos;
+
+        return $this;
+    }
+
+    /**
+     * Remove mesesPagos
+     *
+     * @param MesPago $mesesPagos
+     */
+    public function removeMesesPago(MesPago $mesesPagos)
+    {
+        $this->mesesPagos->removeElement($mesesPagos);
+    }
+
+    /**
+     * Get mesesPagos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMesesPagos()
+    {
+        return $this->mesesPagos;
+    }
+
+    /**
+     * Add pagos
+     *
+     * @param Pago $pagos
+     * @return Cliente
+     */
+    public function addPago(Pago $pagos)
+    {
+        $this->pagos[] = $pagos;
+
+        return $this;
+    }
+
+    /**
+     * Remove pagos
+     *
+     * @param Pago $pagos
+     */
+    public function removePago(Pago $pagos)
+    {
+        $this->pagos->removeElement($pagos);
+    }
+
+    /**
+     * Get pagos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPagos()
+    {
+        return $this->pagos;
     }
 }

@@ -1,0 +1,27 @@
+admin_personal_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Personal:index }
+admin_personal_newpage:
+    path:     /nuevo
+    defaults: { _controller: AdminBundle:Personal:new }
+    methods:  [GET]
+admin_personal_create:
+    path:     /nuevo
+    defaults: { _controller: AdminBundle:Personal:create }
+    methods:  [POST]
+admin_personal_editpage:
+    path:     /{id}/editar
+    defaults: { _controller: AdminBundle:Personal:edit }
+    methods:  [GET]
+admin_personal_update:
+    path:     /{id}/editar
+    defaults: { _controller: AdminBundle:Personal:update }
+    methods:  [POST]
+admin_personal_photo:
+    path:     /{id}/photo
+    defaults: { _controller: AdminBundle:Personal:showPhoto }
+    methods:  [GET]
+admin_personal_delete:
+    path:     /{id}/eliminar
+    defaults: { _controller: AdminBundle:Personal:remove }
+    methods:  [GET]

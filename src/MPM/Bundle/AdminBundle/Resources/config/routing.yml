@@ -1,11 +1,24 @@
 admin_homepage:
     path:     /
     defaults: { _controller: AdminBundle:Home:index }
-admin_loginpage:
+login:
     path:     /login
     defaults: { _controller: AdminBundle:Home:login }
+login_check:
+    path:     /login/check
+
+logout:
+    path:     /logout
+
 
 admin_clientes_ref:
     resource: "@AdminBundle/Resources/config/routing/clientes.yml"
     prefix:   /clientes
 
+admin_personal_ref:
+    resource: "@AdminBundle/Resources/config/routing/personal.yml"
+    prefix:   /personal
+
+admin_tarifas_ref:
+    resource: "@AdminBundle/Resources/config/routing/tarifas.yml"
+    prefix:   /tarifas
