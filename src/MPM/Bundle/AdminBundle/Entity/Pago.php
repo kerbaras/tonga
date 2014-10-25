@@ -39,7 +39,7 @@ class Pago
     /**
      * @var string
      *
-     * @ORM\Column(name="descriptor", type="string", length=255)
+     * @ORM\Column(name="descriptor", type="string", length=255, nullable=true)
      */
     protected $descriptor;
     
@@ -194,26 +194,26 @@ class Pago
     }
 
     /**
-     * Add meses
+     * Add mes
      *
-     * @param MesPago $meses
+     * @param MesPago $mes
      * @return Pago
      */
-    public function addMese(MesPago $meses)
+    public function addMes(MesPago $mes)
     {
-        $this->meses[] = $meses;
+        $this->meses[] = $mes;
 
         return $this;
     }
 
     /**
-     * Remove meses
+     * Remove mes
      *
-     * @param MesPago $meses
+     * @param MesPago $mes
      */
-    public function removeMese(MesPago $meses)
+    public function removeMes(MesPago $mes)
     {
-        $this->meses->removeElement($meses);
+        $this->meses->removeElement($mes);
     }
 
     /**

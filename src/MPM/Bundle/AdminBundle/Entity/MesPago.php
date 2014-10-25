@@ -49,7 +49,7 @@ class MesPago
     /**
      * @var string
      *
-     * @ORM\Column(name="observacion", type="text")
+     * @ORM\Column(name="observacion", type="text", nullable=true)
      */
     protected $observacion;
 

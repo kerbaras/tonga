@@ -236,10 +236,10 @@
                             <a href="javascript:void();"><i class="fa fa-calculator fa-fw"></i> Facturación<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li{% if mainMenu == 'facturar' %} class="active"{% endif %}>
-                                    <a href="#"><i class="fa fa-credit-card"></i> Facturar</a>
+                                    <a href="{{ path('admin_facturar_homepage') }}"><i class="fa fa-credit-card"></i> Facturar</a>
                                 </li>
                                 <li{% if mainMenu == 'facturas' %} class="active"{% endif %}>
-                                    <a href="#"><i class="fa fa-table"></i> Facturas</a>
+                                    <a href="{{ path('admin_facturas_homepage') }}"><i class="fa fa-table"></i> Facturas</a>
                                 </li>
                             </ul>
                         </li>
@@ -253,7 +253,7 @@
                             <a href="{{ path('admin_homepage') }}"><i class="fa fa-shield fa-fw"></i> Logs</a>
                         </li>
                         <li{% if mainMenu == 'caja' %} class="active"{% endif %}>
-                            <a href="{{ path('admin_homepage') }}"><i class="fa fa-money fa-fw"></i> Caja</a>
+                            <a href="{{ path('admin_caja_homepage') }}"><i class="fa fa-money fa-fw"></i> Caja</a>
                         </li>
                     </ul>
                 </div>

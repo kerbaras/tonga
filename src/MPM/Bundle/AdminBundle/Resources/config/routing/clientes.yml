@@ -1,10 +1,6 @@
 admin_clientes_homepage:
     path:     /
     defaults: { _controller: AdminBundle:Clientes:index }
-admin_clientes_show:
-    path:     /{id}
-    defaults: { _controller: AdminBundle:Clientes:show }
-    methods:  [GET]
 admin_clientes_newpage:
     path:     /nuevo
     defaults: { _controller: AdminBundle:Clientes:new }
@@ -28,4 +24,8 @@ admin_clientes_photo:
 admin_clientes_delete:
     path:     /{id}/eliminar
     defaults: { _controller: AdminBundle:Clientes:remove }
+    methods:  [GET]
+admin_clientes_show:
+    path:     /{id}
+    defaults: { _controller: AdminBundle:Clientes:show }
     methods:  [GET]

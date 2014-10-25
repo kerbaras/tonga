@@ -22,3 +22,11 @@ admin_personal_ref:
 admin_tarifas_ref:
     resource: "@AdminBundle/Resources/config/routing/tarifas.yml"
     prefix:   /tarifas
+
+admin_facturas_ref:
+    resource: "@AdminBundle/Resources/config/routing/facturas.yml"
+    prefix:   /facturacion
+
+admin_caja_ref:
+    resource: "@AdminBundle/Resources/config/routing/caja.yml"
+    prefix:   /caja

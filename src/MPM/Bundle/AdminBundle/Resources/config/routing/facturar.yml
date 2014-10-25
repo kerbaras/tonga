@@ -1,0 +1,11 @@
+admin_facturar_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Facturar:index }
+    methods:  [GET]
+admin_facturar_facturar:
+    path:     /
+    defaults: { _controller: AdminBundle:Facturar:facturar }
+    methods:  [POST]
+admin_facturar_datos:
+    path:     /datos
+    defaults: { _controller: AdminBundle:Facturar:getDatos }

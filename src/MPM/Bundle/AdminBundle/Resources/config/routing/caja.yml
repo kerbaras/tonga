@@ -1,0 +1,9 @@
+admin_caja_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Caja:index }
+admin_caja_open:
+    path:     /open
+    defaults: { _controller: AdminBundle:Caja:open }
+admin_caja_close:
+    path:     /close
+    defaults: { _controller: AdminBundle:Caja:close }

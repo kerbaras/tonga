@@ -38,7 +38,7 @@ class Caja
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_close", type="datetime")
+     * @ORM\Column(name="fecha_close", type="datetime", nullable=true)
      */
     protected $fechaCl;
 
@@ -54,6 +54,17 @@ class Caja
      * @ORM\Column(name="monto", type="decimal")
      */
     protected $monto;
+
+
+    public function sum($value)
+    {
+        $this->monto = $this->monto + $value;
+    }
+
+    public function rest($value)
+    {
+        $this->monto = $this->monto - $value;
+    }
 
     /**
      * Get id

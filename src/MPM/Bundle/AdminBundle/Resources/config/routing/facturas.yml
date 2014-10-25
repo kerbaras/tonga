@@ -1,0 +1,7 @@
+admin_facturas_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Factura:index }
+
+admin_facturar_ref:
+    resource: "@AdminBundle/Resources/config/routing/facturar.yml"
+    prefix:   /facturar
