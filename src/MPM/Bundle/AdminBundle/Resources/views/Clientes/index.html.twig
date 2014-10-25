@@ -32,9 +32,9 @@
                                                     <tr>
                                                         <th>Apellido</th>
                                                         <th>Nombre</th>
-                                                        <th>DNI</th>
+                                                        <th class="hidden-xs">DNI</th>
                                                         <th>Telefono</th>
-                                                        <th>Tarifa</th>
+                                                        <th class="hidden-xs">Tarifa</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -43,9 +43,9 @@
                                                     <tr valign="middle">
                                                         <td>{{ cliente.apellido }}</td>
                                                         <td>{{ cliente.nombre }}</td>
-                                                        <td>{{ cliente.dni }}</td>
+                                                        <td class="hidden-xs">{{ cliente.dni }}</td>
                                                         <td>{{ cliente.telefono }}</td>
-                                                        <td></td>
+                                                        <td class="hidden-xs">{% if cliente.tarifa.id is defined %}${{ cliente.tarifa.monto }}{% else %}Sin Tarifa{% endif %}</td>
                                                         <td align="center">
                                                             <a href="{{ path('admin_clientes_show', { 'id': cliente.id }) }}" class="btn btn-info btn-circle"><i class="fa fa-search"></i></a>
                                                             <a href="{{ path('admin_clientes_editpage', { 'id': cliente.id }) }}" class="btn btn-warning btn-circle"><i class="fa fa-edit"></i></a>
